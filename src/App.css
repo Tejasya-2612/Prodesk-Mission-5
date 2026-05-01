@@ -1,0 +1,485 @@
+
+/* ======================================================================
+   Flowboard — Kanban UI
+   ====================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Geist:wght@300;400;500;600;700&display=swap");
+
+:root {
+  --kb-bg: #f7f4ec;
+  --kb-bg-panel: #ffffff;
+  --kb-bg-column: #efeadd;
+  --kb-ink: #1a1b1f;
+  --kb-ink-soft: #5c5d63;
+  --kb-ink-faint: #9b9ca3;
+  --kb-line: #e4dfd1;
+  --kb-line-strong: #d5cfbd;
+  --kb-accent: #0b3d2e;
+  --kb-accent-ink: #f7f4ec;
+  --kb-accent-soft: #e8efe9;
+
+  --kb-high: #d2342f;
+  --kb-med:  #e0a408;
+  --kb-low:  #2a8b5f;
+
+  --kb-todo:     #e0a408;
+  --kb-progress: #2f6fd8;
+  --kb-done:     #2a8b5f;
+
+  --kb-radius: 14px;
+  --kb-radius-sm: 10px;
+  --kb-shadow-card: 0 1px 0 rgba(26,27,31,0.04), 0 2px 6px rgba(26,27,31,0.06);
+  --kb-shadow-card-hover: 0 2px 0 rgba(26,27,31,0.04), 0 10px 24px rgba(26,27,31,0.10);
+}
+
+.dark {
+  --kb-bg: #11131a;
+  --kb-bg-panel: #171a23;
+  --kb-bg-column: #1b1f2a;
+  --kb-ink: #ecedf1;
+  --kb-ink-soft: #a7abb6;
+  --kb-ink-faint: #6d7280;
+  --kb-line: #262a36;
+  --kb-line-strong: #343947;
+  --kb-accent: #d6f5a2;
+  --kb-accent-ink: #0d1014;
+  --kb-accent-soft: #21271f;
+
+  --kb-high: #ff6b63;
+  --kb-med:  #f4c13a;
+  --kb-low:  #5bd19a;
+
+  --kb-todo:     #f4c13a;
+  --kb-progress: #6aa5ff;
+  --kb-done:     #5bd19a;
+
+  --kb-shadow-card: 0 1px 0 rgba(0,0,0,0.3), 0 4px 14px rgba(0,0,0,0.35);
+  --kb-shadow-card-hover: 0 2px 0 rgba(0,0,0,0.35), 0 12px 28px rgba(0,0,0,0.5);
+}
+
+.App,
+.kb-shell {
+  background: var(--kb-bg);
+  color: var(--kb-ink);
+  min-height: 100vh;
+  font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: "ss01", "cv11";
+}
+
+.kb-shell {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 40px 28px 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.kb-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(26,27,31,0.04) 1px, transparent 1px);
+  background-size: 3px 3px;
+  opacity: 0.6;
+  z-index: 0;
+}
+.dark .kb-shell::before {
+  background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+  opacity: 0.4;
+}
+
+.kb-shell > * { position: relative; z-index: 1; }
+
+.kb-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.kb-brand { display: flex; align-items: center; gap: 14px; }
+
+.kb-brand-mark {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--kb-accent);
+  color: var(--kb-accent-ink);
+  display: grid;
+  place-items: center;
+  box-shadow: var(--kb-shadow-card);
+  transform: rotate(-4deg);
+  transition: transform 220ms ease;
+}
+.kb-brand-mark:hover { transform: rotate(0deg) scale(1.05); }
+
+/* ▼ CHANGED: explicit colors so dark-mode title is always visible */
+.kb-brand-text { display: flex; flex-direction: column; }
+
+.kb-title {
+  font-family: "Bricolage Grotesque", serif;
+  font-weight: 700;
+  font-size: 34px;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin: 0;
+  color: var(--kb-ink);
+}
+
+.kb-subtitle {
+  margin: 4px 0 0;
+  color: var(--kb-ink-soft);
+  font-size: 13px;
+}
+/* ▲ end change */
+
+.kb-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid var(--kb-line-strong);
+  background: var(--kb-bg-panel);
+  color: var(--kb-ink);
+  border-radius: 999px;
+  font: 500 13px "Geist", sans-serif;
+  cursor: pointer;
+  transition: transform 160ms ease, background-color 160ms ease, border-color 160ms ease;
+}
+.kb-theme-toggle:hover {
+  background: var(--kb-accent);
+  color: var(--kb-accent-ink);
+  border-color: var(--kb-accent);
+  transform: translateY(-1px);
+}
+
+.kb-controls {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 14px;
+  align-items: stretch;
+}
+
+.kb-task-input {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 8px;
+  background: var(--kb-bg-panel);
+  border: 1px solid var(--kb-line);
+  border-radius: var(--kb-radius);
+  padding: 8px;
+  box-shadow: var(--kb-shadow-card);
+}
+
+.kb-text-field {
+  border: none;
+  background: transparent;
+  padding: 10px 12px;
+  font: 500 15px "Geist", sans-serif;
+  color: var(--kb-ink);
+  outline: none;
+  min-width: 0;
+}
+.kb-text-field::placeholder { color: var(--kb-ink-faint); }
+
+.kb-priority-select {
+  position: relative;
+  border: 1px solid var(--kb-line-strong);
+  border-radius: var(--kb-radius-sm);
+  background: var(--kb-bg);
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+}
+.kb-priority-select::before {
+  content: "";
+  width: 8px; height: 8px; border-radius: 50%;
+  margin-right: 8px;
+}
+.kb-priority-select.priority-high::before    { background: var(--kb-high); }
+.kb-priority-select.priority-medium::before  { background: var(--kb-med);  }
+.kb-priority-select.priority-low::before     { background: var(--kb-low);  }
+
+.kb-priority-select select {
+  appearance: none;
+  background: transparent;
+  border: none;
+  padding: 10px 24px 10px 0;
+  font: 500 13px "Geist", sans-serif;
+  color: var(--kb-ink);
+  outline: none;
+  cursor: pointer;
+}
+
+.kb-add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 18px;
+  background: var(--kb-accent);
+  color: var(--kb-accent-ink);
+  border: none;
+  border-radius: var(--kb-radius-sm);
+  font: 600 14px "Geist", sans-serif;
+  cursor: pointer;
+  transition: transform 160ms ease, filter 160ms ease;
+}
+.kb-add-btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
+.kb-add-btn:active { transform: translateY(0); }
+
+.kb-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--kb-bg-panel);
+  border: 1px solid var(--kb-line);
+  border-radius: var(--kb-radius);
+  padding: 0 12px;
+  box-shadow: var(--kb-shadow-card);
+}
+.kb-search-icon { color: var(--kb-ink-faint); flex-shrink: 0; }
+.kb-search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 14px 0;
+  font: 500 14px "Geist", sans-serif;
+  color: var(--kb-ink);
+  outline: none;
+  min-width: 0;
+}
+.kb-search-input::placeholder { color: var(--kb-ink-faint); }
+.kb-search-clear {
+  background: transparent;
+  border: none;
+  color: var(--kb-ink-soft);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  display: grid; place-items: center;
+}
+.kb-search-clear:hover { background: var(--kb-line); color: var(--kb-ink); }
+
+.kb-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.kb-column {
+  background: var(--kb-bg-column);
+  border: 1px solid var(--kb-line);
+  border-radius: var(--kb-radius);
+  display: flex;
+  flex-direction: column;
+  min-height: 320px;
+  transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+.kb-column.is-over {
+  border-color: var(--kb-accent);
+  background: var(--kb-accent-soft);
+  transform: translateY(-2px);
+}
+
+.kb-column-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 18px 12px;
+  border-bottom: 1px dashed var(--kb-line-strong);
+}
+
+.kb-column-head-left {
+  display: flex; align-items: center; gap: 10px;
+}
+.kb-column-dot {
+  width: 10px; height: 10px; border-radius: 3px;
+  display: inline-block;
+}
+.accent-todo      .kb-column-dot { background: var(--kb-todo); }
+.accent-progress  .kb-column-dot { background: var(--kb-progress); }
+.accent-done      .kb-column-dot { background: var(--kb-done); }
+
+.kb-column-title {
+  font-family: "Bricolage Grotesque", serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--kb-ink);
+}
+
+.kb-column-count {
+  font: 600 12px "Geist", sans-serif;
+  color: var(--kb-ink-soft);
+  background: var(--kb-bg-panel);
+  border: 1px solid var(--kb-line);
+  padding: 2px 10px;
+  border-radius: 999px;
+}
+
+.kb-column-body {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 200px;
+}
+
+.kb-empty {
+  text-align: center;
+  color: var(--kb-ink-faint);
+  padding: 36px 12px;
+  border: 1px dashed var(--kb-line-strong);
+  border-radius: var(--kb-radius-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+.kb-empty p { margin: 0; }
+
+.kb-card {
+  position: relative;
+  background: var(--kb-bg-panel);
+  border: 1px solid var(--kb-line);
+  border-left-width: 4px;
+  border-radius: var(--kb-radius-sm);
+  padding: 12px 12px 12px 14px;
+  box-shadow: var(--kb-shadow-card);
+  display: grid;
+  grid-template-columns: 18px 1fr auto;
+  gap: 8px;
+  align-items: start;
+  transition: box-shadow 200ms ease, transform 200ms ease, border-color 200ms ease;
+  animation: kb-card-in 260ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.kb-card:hover {
+  box-shadow: var(--kb-shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+.kb-card.priority-high   { border-left-color: var(--kb-high); }
+.kb-card.priority-medium { border-left-color: var(--kb-med); }
+.kb-card.priority-low    { border-left-color: var(--kb-low); }
+
+.kb-card.is-overlay {
+  transform: rotate(-2deg);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+  cursor: grabbing;
+}
+
+.kb-drag-handle {
+  background: transparent;
+  border: none;
+  padding: 2px;
+  color: var(--kb-ink-faint);
+  cursor: grab;
+  display: grid; place-items: center;
+  border-radius: 4px;
+  margin-top: 2px;
+}
+.kb-drag-handle:active { cursor: grabbing; }
+.kb-drag-handle:hover { color: var(--kb-ink); background: var(--kb-line); }
+
+.kb-card-body { min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+
+.kb-card-text {
+  background: transparent;
+  border: none;
+  padding: 0;
+  text-align: left;
+  font: 500 14px/1.45 "Geist", sans-serif;
+  color: var(--kb-ink);
+  cursor: text;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+.kb-card-text:hover { color: var(--kb-accent); }
+.dark .kb-card-text:hover { color: var(--kb-accent); }
+
+.kb-card-edit {
+  width: 100%;
+  font: 500 14px/1.45 "Geist", sans-serif;
+  color: var(--kb-ink);
+  background: var(--kb-bg);
+  border: 1px solid var(--kb-accent);
+  border-radius: 8px;
+  padding: 6px 8px;
+  outline: none;
+}
+
+.kb-card-meta { display: flex; align-items: center; gap: 6px; }
+
+.kb-pill {
+  text-transform: uppercase;
+  font: 700 10px "Geist", sans-serif;
+  letter-spacing: 0.08em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--kb-bg);
+  border: 1px solid var(--kb-line);
+  color: var(--kb-ink-soft);
+}
+.pill-high   { color: var(--kb-high); border-color: color-mix(in srgb, var(--kb-high) 40%, transparent); }
+.pill-medium { color: var(--kb-med);  border-color: color-mix(in srgb, var(--kb-med) 40%, transparent); }
+.pill-low    { color: var(--kb-low);  border-color: color-mix(in srgb, var(--kb-low) 40%, transparent); }
+
+.kb-card-actions { display: flex; gap: 4px; align-items: center; }
+
+.kb-icon-btn {
+  width: 26px; height: 26px;
+  display: grid; place-items: center;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--kb-ink-soft);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 160ms ease;
+}
+.kb-icon-btn:hover {
+  background: var(--kb-bg);
+  border-color: var(--kb-line-strong);
+  color: var(--kb-ink);
+}
+.kb-icon-danger:hover {
+  background: color-mix(in srgb, var(--kb-high) 10%, transparent);
+  border-color: color-mix(in srgb, var(--kb-high) 40%, transparent);
+  color: var(--kb-high);
+}
+
+.kb-drag-overlay { pointer-events: none; }
+
+.kb-footer {
+  margin-top: 12px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--kb-line-strong);
+  color: var(--kb-ink-faint);
+  font-size: 12px;
+  text-align: center;
+}
+
+.kb-toast {
+  font-family: "Geist", sans-serif !important;
+}
+
+@keyframes kb-card-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 980px) {
+  .kb-board { grid-template-columns: 1fr; }
+  .kb-controls { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 560px) {
+  .kb-shell { padding: 24px 16px 40px; }
+  .kb-task-input { grid-template-columns: 1fr 1fr; }
+  .kb-task-input .kb-text-field { grid-column: 1 / -1; }
+  .kb-title { font-size: 28px; }
+}
