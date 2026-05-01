@@ -1,4 +1,4 @@
-** Prodesk Mission 5 – Kanban Task Board (Level 3)**
+**Prodesk Mission 5 – Kanban Task Board (Level 3)**
 
 A modern Trello-style Task Management App built using React (Vite).
 This project demonstrates core frontend engineering concepts like state management, component architecture, drag & drop interactions, and local persistence.
@@ -19,21 +19,21 @@ The goal was to build a Kanban Board with increasing difficulty levels:
 **This repository implements Level 3 (Advanced).**
 
  **Features**
- Core Features (Level 1)
- Add new tasks
- Delete tasks
- Move tasks between:
+**Core Features (Level 1)**
+Add new tasks
+Delete tasks
+Move tasks between:
 To Do
 In Progress
 Done
- Enhanced Features (Level 2)
+** Enhanced Features (Level 2)**
  Edit tasks inline
  Priority system:
 🔴 High
 🟡 Medium
 🟢 Low
 LocalStorage persistence (tasks remain after refresh)
-** Advanced Features (Level 3)**
+**Advanced Features (Level 3)**
 Drag & Drop (Smooth interaction)
 Task search / filter
 Real-time UI updates using React state
