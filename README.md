@@ -1,95 +1,96 @@
-Prodesk Mission 5 – Advanced Kanban Task Board (Level 3)
+** Prodesk Mission 5 – Kanban Task Board (Level 3)**
 
-A fully interactive Trello-like Task Management App built using React.js + Vite, featuring Drag & Drop, Search, Priority System, and Persistent State.
+A modern Trello-style Task Management App built using React (Vite).
+This project demonstrates core frontend engineering concepts like state management, component architecture, drag & drop interactions, and local persistence.
 
-Live Demo
+**Vercel Demo Link:**
+https://prodesk-mission-5-szw8.vercel.app?_vercel_share=vfJohfdZHN03dd8gITDL9diTEES0oXhf
 
-https://prodesk-mission-5-szw8.vercel.app/
+**Project Overview**
 
-Project Overview
+This project is part of the Prodesk Week 5 Internship Mission
 
-This project is part of the Prodesk IT Internship – Week 5 Mission
+The goal was to build a Kanban Board with increasing difficulty levels:
 
-This is a Level 3 (Advanced) implementation, showcasing real-world frontend engineering skills using React.
+ Level 1 – Basic Task Management
+ Level 2 – Enhanced Features
+ Level 3 – Advanced UI & Interactions
 
- Tech Stack
- React.js (Hooks – useState)
- Vite
- CSS / Tailwind (if used)
- dnd-kit (Drag & Drop)
- LocalStorage
- Features
- Core Features
-Add tasks to To Do
-Delete tasks
-Move tasks across columns
- Advanced Features (Level 3)
- Drag & Drop
-Smoothly drag tasks between:
+**This repository implements Level 3 (Advanced).**
+
+ **Features**
+ Core Features (Level 1)
+ Add new tasks
+ Delete tasks
+ Move tasks between:
 To Do
 In Progress
 Done
-Built using dnd-kit
- Search & Filter
-Real-time filtering of tasks by name
- Inline Editing
-Click on task → edit → save instantly
- Priority System
- High Priority (Red Border)
- Medium Priority (Yellow Border)
- Low Priority (Green Border)
- Persistent Storage
-Tasks saved in localStorage
-Data remains after page refresh
- Project Structure
+ Enhanced Features (Level 2)
+ Edit tasks inline
+ Priority system:
+🔴 High
+🟡 Medium
+🟢 Low
+LocalStorage persistence (tasks remain after refresh)
+** Advanced Features (Level 3)**
+Drag & Drop (Smooth interaction)
+Task search / filter
+Real-time UI updates using React state
+Component-based architecture
+**Tech Stack**
+React (Vite)
+JavaScript (ES6+)
+CSS / Tailwind (if used)
+LocalStorage API
+Drag & Drop Library (dnd-kit / react-beautiful-dnd)
+**Project Structure**
 prodesk-app/
-│
-├── public/
-├── src/
+│── src/
 │   ├── components/
 │   │   ├── Column.jsx
 │   │   ├── TaskCard.jsx
-│   │   ├── AddTask.jsx
-│   │   ├── SearchBar.jsx
+│   │   ├── TaskForm.jsx
 │   │
 │   ├── App.jsx
 │   ├── main.jsx
-│   └── styles.css
+│   ├── styles.css
 │
-├── package.json
-└── vite.config.js
- Installation & Setup
-1️ Clone Repo
+│── public/
+│── package.json
+│── vite.config.js
+**Installation & Setup**
+1️ Clone the Repository
 git clone https://github.com/Tejasya-2612/Prodesk-Mission-5.git
 cd Prodesk-Mission-5
 2️ Install Dependencies
 npm install
-3️ Run Locally
+3️ Run the Project
 npm run dev
- Deployment (Vercel)
-Push code to GitHub
-Import repo in Vercel
-Click Deploy
- What Makes This Project Stand Out
- Real-world Kanban UI
- Drag-and-drop UX (not just buttons)
- Clean component structure
- State-driven UI (React best practices)
- Persistent data handling
- Key Learnings
-React State Management (useState)
-Component-based architecture
-Drag & Drop implementation
+** Deployment
+**
+Deployed using Vercel
+
+**Key Concepts Learned**
+React useState
+Component reusability
+Props & state flow
+Drag-and-drop implementation
 LocalStorage handling
-UI/UX improvements
- Demo Video
+UI/UX structuring
 
- 
+**Demo**
+https://drive.google.com/file/d/1vtiGwaOQJCrABdNFo7Lxdm98p1OJ1Qz3/view?usp=sharing
 
- Important Notes
- No API required (pure frontend logic)
- Built with Vite (fast build tool)
- Focused on React fundamentals + UX
- Author
+**Challenges Faced**
+Managing state across multiple columns
+Implementing drag-and-drop smoothly
+Persisting data correctly using localStorage
+Avoiding unnecessary re-renders
 
-A Tejasya
+**Author:**
+A TEJASYA
+P/IL/26/NOIDA/M1299
+KLH UNIVERSITY  
+
+
