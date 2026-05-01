@@ -18,67 +18,6 @@ The goal was to build a Kanban Board with increasing difficulty levels:
 
 **This repository implements Level 3 (Advanced).**
 
- **Features**
-**Core Features (Level 1)**
-Add new tasks
-Delete tasks
-Move tasks between:
-To Do
-In Progress
-Done
-** Enhanced Features (Level 2)**
- Edit tasks inline
- Priority system:
-🔴 High
-🟡 Medium
-🟢 Low
-LocalStorage persistence (tasks remain after refresh)
-**Advanced Features (Level 3)**
-Drag & Drop (Smooth interaction)
-Task search / filter
-Real-time UI updates using React state
-Component-based architecture
-**Tech Stack**
-React (Vite)
-JavaScript (ES6+)
-CSS / Tailwind (if used)
-LocalStorage API
-Drag & Drop Library (dnd-kit / react-beautiful-dnd)
-**Project Structure**
-prodesk-app/
-│── src/
-│   ├── components/
-│   │   ├── Column.jsx
-│   │   ├── TaskCard.jsx
-│   │   ├── TaskForm.jsx
-│   │
-│   ├── App.jsx
-│   ├── main.jsx
-│   ├── styles.css
-│
-│── public/
-│── package.json
-│── vite.config.js
-**Installation & Setup**
-1️ Clone the Repository
-git clone https://github.com/Tejasya-2612/Prodesk-Mission-5.git
-cd Prodesk-Mission-5
-2️ Install Dependencies
-npm install
-3️ Run the Project
-npm run dev
-** Deployment
-**
-Deployed using Vercel
-
-**Key Concepts Learned**
-React useState
-Component reusability
-Props & state flow
-Drag-and-drop implementation
-LocalStorage handling
-UI/UX structuring
-
 **Demo**
 https://drive.google.com/file/d/1vtiGwaOQJCrABdNFo7Lxdm98p1OJ1Qz3/view?usp=sharing
 
